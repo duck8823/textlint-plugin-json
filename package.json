@@ -1,0 +1,16 @@
+{
+  "name": "textlint-plugin-json",
+  "version": "0.0.1",
+  "description": "textlint plugin for json",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "babel src --out-dir dst",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shunsuke maeda",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
