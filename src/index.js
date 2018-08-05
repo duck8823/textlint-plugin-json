@@ -1,5 +1,7 @@
 "use strict";
 
+import {JSONProcessor} from "./JSONProcessor";
+
 export default {
-	Processor: undefined
+	Processor: JSONProcessor
 }
