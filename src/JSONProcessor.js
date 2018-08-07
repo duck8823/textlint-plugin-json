@@ -16,15 +16,7 @@ export class JSONProcessor {
         return {
             preProcess(text) {
                 let ast = parse(text);
-                ast.type = ASTNodeTypes.Document;
-                ast.range = [ast.loc.start.column, ast.loc.end.column];
-                ast.children = ast.children.map((child) => {
-                    child = child.value;
-                    child.type = ASTNodeTypes.Str;
-                    child.range = [child.loc.start.column, child.loc.end.column];
-                    return child;
-                });
-                // TODO 再帰的にする
+                ast = convert(ast);
                 return ast;
             },
             postProcess(messages, filePath) {
@@ -35,4 +27,41 @@ export class JSONProcessor {
             }
         };
     }
+}
+
+function convert(node) {
+    switch (node.type) {
+        case "Object":
+            node.type = ASTNodeTypes.Document;
+            node.children = node.children.map((child) => {
+               return convert(child);
+            });
+            break;
+        case "Property":
+            node.type = ASTNodeTypes.Document;
+            node.children = [
+                convert(node.key),
+                convert(node.value)
+            ];
+            delete node.key;
+            delete node.value;
+            break;
+        case "Array":
+            node.type = ASTNodeTypes.List;
+            node.children = node.children.map((child) => {
+               return convert(child);
+            });
+            break;
+        case "Identifier":
+            node.type = ASTNodeTypes.Str;
+            break;
+        case "Literal":
+            node.type = ASTNodeTypes.Str;
+            break;
+        default:
+            // nothing to do
+            break;
+    }
+    node.range = [node.loc.start.offset, node.loc.end.offset];
+    return node
 }
