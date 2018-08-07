@@ -5,18 +5,16 @@ JSON to textlint AST parser
 ### from
 ```json
 {
-  "key": "お刺身を食べれない。",
+  "key": "value",
   "nested": {
-    "key": "お刺身を食べれない。"
+    "nested_key": "nested_value"
   },
   "array": [
     {
-      "key": "お刺身を食べれない。"
+      "array_obj_key": "array_obj_value"
     },
-    "お刺身を食べれない。",
-    "お刺身を食べれない。"
-  ],
-  "お刺身を食べれない。": "value"
+    "array_value"
+  ]
 }
 ```
 
